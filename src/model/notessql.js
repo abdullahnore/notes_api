@@ -66,7 +66,7 @@ function getNotes(cid, status, uid) {
       let sql = `SELECT  notesId ,u_id  AS 'user', notesCategory AS 'Category',notesStr AS 'note' ,status FROM notes INNER JOIN category ON category.cid = notes.c_id WHERE  u_id='${uid}' AND status ='${status}' `;
       db.query(sql, (err, result) => {
         if (err) {
-          throw err;
+          throw new Error(err);
         }
         result = JSON.parse(JSON.stringify(result));
         //console.log(result);
@@ -90,10 +90,10 @@ function getNotes(cid, status, uid) {
 //get all category
 function category() {
   return new Promise((resolve, reject) => {
-    let sql = `SELECT * FROM category`;
+    let sql = `CALL fetchCategory()`;
     db.query(sql, (err, result) => {
       if (err) {
-        throw err;
+        throw new Error(err);
       }
       result = JSON.parse(JSON.stringify(result));
       resolve(result);
